@@ -1,0 +1,82 @@
+<page-flow-sidebar>
+  <div class="eden-blocks-backdrop" if={ state.showing } onclick={ (e) => hide(e) } />
+  <div class={ `eden-blocks-sidebar${state.showing ? ' eden-blocks-sidebar-show' : ''}` }>
+    <div class="card">
+      <div class="card-header">
+        <div class="w-100">
+          <h5>
+            Select Module
+          </h5>
+          
+        </div>
+      </div>
+
+      <div class="card-body" if={ !props.loading('refresh') }>
+        <p class="lead mb-3">
+          Actions
+        </p>
+
+        <div class="builder-elements">
+          <div each={ (action, i) in props.actions } type={ action.type } class={ `card card-flow card-action card-${action.color || 'primary'} mb-2` }>
+            <div class="card-icon">
+              <i class={ action.icon } />
+            </div>
+            <div class="card-body">
+              { action.title }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    /**
+     * export base class
+     */
+    export default class FlowSidebarTest {
+      /**
+       * on before mount
+       */
+      onBeforeMount(...args) {
+        // set ref
+        if (this.props.ref) this.props.ref(this);
+
+        // set showing
+        this.state.showing = false;
+
+        // show/hide
+        this.show = this.show.bind(this);
+        this.hide = this.hide.bind(this);
+      }
+
+      /**
+       * gets tabs
+       */
+      getTabs() {
+
+      }
+
+      /**
+       * Shows sidebar
+       */
+      show() {
+        // update
+        this.update({
+          showing : true,
+        });
+      }
+
+      /**
+       * Shows sidebar
+       */
+      hide() {
+        // update
+        this.update({
+          showing : false,
+        });
+      }
+    }
+
+  </script>
+</page-flow-sidebar>

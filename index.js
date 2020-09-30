@@ -1,14 +1,18 @@
 // require first
-const axios = require('axios');
 const { Module } = require('@dashup/module');
 
 // import base
-const SMSAction = require('./actions/sms');
+const FlowPage = require('./pages/flow');
+
+// import base
+const HookAction   = require('./actions/hook');
+const EventAction  = require('./actions/event');
+const FilterAction = require('./actions/filter');
 
 /**
  * export module
  */
-class PhoneModule extends Module {
+class FlowModule extends Module {
 
   /**
    * construct discord module
@@ -16,6 +20,23 @@ class PhoneModule extends Module {
   constructor() {
     // run super
     super();
+  }
+  
+  /**
+   * Register all page interfaces here
+   * 
+   * ```
+   * // register connect class
+   * register(Page);
+   * ```
+   * 
+   * Class `Page` should extend `require('@dashup/module').Page`
+   * 
+   * @param {Function} register 
+   */
+  pages(register) {
+    // register sms action
+    register(FlowPage);
   }
   
   /**
@@ -32,29 +53,11 @@ class PhoneModule extends Module {
    */
   actions(register) {
     // register sms action
-    register(SMSAction);
-  }
-
-  /**
-   * send
-   *
-   * @param to 
-   * @param from 
-   * @param text 
-   */
-  send(to, from, body) {
-    // await res
-    return axios.post(`${this.dashup.config.smsUrl}messages`, {
-      to,
-      from,
-      body,
-    }, {
-      headers : {
-        Authorization : `Bearer ${this.dashup.config.token}`,
-      }
-    });
+    register(HookAction);
+    register(EventAction);
+    register(FilterAction);
   }
 }
 
 // create new
-module.exports = new PhoneModule();
+module.exports = new FlowModule();

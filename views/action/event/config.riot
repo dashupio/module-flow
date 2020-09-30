@@ -1,0 +1,31 @@
+<action-event-config>
+  <div class={ `card card-flowing card-${props.getAction(props.action).color || 'primary'} mb-3` }>
+    <div class="card-header drag">
+      <div class="card-icon">
+        <i class={ props.getAction(props.action).icon } />
+      </div>
+
+      { props.getAction(props.action).title }
+
+    </div>
+    <div class="card-body">
+      Trigger the event 
+      <input class="form-control d-inline-block w-25 ml-1 bg-light" ref="event" value={ props.action.event || '' } type="text" onchange={ (e) => onChange(e) } />
+    </div>
+  </div>
+  
+  <script>
+    // export default base
+    export default class FlowActionEvent {
+      /**
+       * on change timing
+       *
+       * @param {Event} e
+       */
+      onChange(e) {
+        // set element
+        this.props.set('event', this.$('[ref="event"]').value);
+      }
+    }
+  </script>
+</action-event-config>

@@ -1,0 +1,93 @@
+<page-flow-section>
+  <div class={ `flow-elements ${isEmpty() ? ' flow-elements-empty' : ''}` } onclick={ (e) => isEmpty() ? props.onSidebar(e) : null }>
+    <div class="flow-elements-row">
+      <div each={ (action, a) in getChildren() } id={ action.uuid } class="flow-element" data-order={ action.order }>
+        <div if={ getView(action) } is={ getView(action) } view="config" set={ (k, v) => props.onSet(action, k, v) } action={ action } { ...getProps() } />
+        <page-flow-section data-id={ action.uuid } { ...getProps() } />
+      </div>
+    </div>
+  </div>
+
+  <script>
+
+    // export flow section
+    export default class FlowSection {
+
+      /**
+       * on before mount
+       */
+      onBeforeMount(...args) {
+        // set ref
+        if (this.props.ref) this.props.ref(this);
+
+        // children
+        this.getView     = this.getView.bind(this);
+        this.getChildren = this.getChildren.bind(this);
+      }
+
+      /**
+       * check empty
+       */
+      isEmpty() {
+        return !this.getChildren().length;
+      }
+
+      /**
+       * get props
+       */
+      getProps() {
+        // props
+        const props = { ...(this.props) };
+
+        // delete
+        delete props.is;
+        delete props.set;
+        delete props.view;
+        delete props.action;
+        delete props.dataId;
+
+        // return props
+        return props;
+      }
+
+      /**
+       * get tree
+       */
+      getChildren() {
+        // find and sort
+        const children = this.props.children.filter((child) => {
+          // parent
+          return child.parent === this.props.dataId;
+        }).sort((a, b) => {
+          // set order
+          if (!a.order) a.order = 0;
+          if (!b.order) b.order = 0;
+
+          // get order
+          if (a.order > b.order) return 1;
+          if (a.order < b.order) return -1;
+
+          // return no change
+          return 0;
+        });
+        
+        // return
+        return children;
+      }
+
+      /**
+       * get action view
+       */
+      getView(action) {
+        // get trigger
+        const actualAction = this.props.getAction(action);
+
+        // view
+        if (!actualAction) return;
+
+        // return trigger view
+        return `action-${actualAction.view || `${action.type}-config`}`;
+      }
+    }
+  </script>
+</page-flow-section>

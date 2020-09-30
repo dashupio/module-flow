@@ -1,0 +1,51 @@
+<page-flow-menu>
+  <div class="btn-group ml-2">
+    <button class={ `btn btn-info${!(!props.zoom || props.zoom > 0.5) ? ' disabled' : ''}` } onclick={ (e) => onZoomIn(e) }>
+      <i class="fa fa-search-plus" />
+    </button>
+    <button class={ `btn btn-info${!props.zoom || props.zoom >= 1 ? ' disabled' : ''}` } onclick={ (e) => onZoomOut(e) }>
+      <i class="fa fa-search-minus" />
+    </button>
+  </div>
+
+  <script>
+
+    // export default
+    export default class DashupNavFlow {
+
+      /**
+       * on zoom in
+       */
+      onZoomIn(e) {
+        // zoom
+        let zoom = this.props.zoom || 1;
+
+        // add
+        zoom -= 0.05;
+
+        // reset
+        if (zoom < 0.5) zoom = 0.5;
+        
+        // set date
+        this.props.props('zoom', zoom);
+      }
+
+      /**
+       * on zoom out
+       */
+      onZoomOut(e) {
+        // zoom
+        let zoom = this.props.zoom || 1;
+
+        // add
+        zoom += 0.05;
+
+        // reset
+        if (zoom > 1) zoom = 1;
+        
+        // set date
+        this.props.props('zoom', zoom);
+      }
+    }
+  </script>
+</page-flow-menu>
