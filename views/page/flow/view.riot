@@ -17,7 +17,7 @@
               On
             </span>
             <eden-select class="d-inline-flex mx-1" onchange={ (e, value) => onTrigger(value) } placeholder="Select Trigger" data={ getTriggerData() } />
-            <span if={ getTriggerView() } is={ getTriggerView() } set={ (k, v) => props.data(`data.trigger.${k}`, v) } get-trigger={ (t) => getTrigger(t) } props={ (k, v) => setProps(k, v) } page={ props.page } dashup={ props.dashup } actions={ props.actions } triggers={ props.triggers } { ...(state.extraProps) } />
+            <dashup-view if={ props.page.get('data.trigger.type') } type="trigger" view="config" struct={ props.page.get('data.trigger.type') } set={ (k, v) => props.data(`data.trigger.${k}`, v) } get-trigger={ (t) => getTrigger(t) } props={ (k, v) => setProps(k, v) } page={ props.page } dashup={ props.dashup } actions={ props.actions } triggers={ props.triggers } { ...(state.extraProps) } />
           </div>
         </div>
         
@@ -36,7 +36,7 @@
 
     // import sidebar
     import pageFlowSection from './section';
-    import pageFlowSidebar from './sidebar';;
+    import pageFlowSidebar from './sidebar';
 
     // register
     riot.register('page-flow-section', pageFlowSection);

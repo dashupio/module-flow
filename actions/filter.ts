@@ -1,12 +1,12 @@
 
 // import base
 import query from 'query';
-import { Action } from '@dashup/module';
+import { Struct } from '@dashup/module';
 
 /**
  * create dashup action
  */
-export default class FilterAction extends Action {
+export default class FilterAction extends Struct {
 
   /**
    * returns action type

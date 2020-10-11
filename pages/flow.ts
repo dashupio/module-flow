@@ -1,11 +1,11 @@
 
 // import page interface
-import { Page } from '@dashup/module';
+import { Struct } from '@dashup/module';
 
 /**
  * build address helper
  */
-export default class FlowPage extends Page {
+export default class FlowPage extends Struct {
 
   /**
    * returns page type
@@ -65,28 +65,5 @@ export default class FlowPage extends Page {
   get description() {
     // return description string
     return 'Page Descripton';
-  }
-
-  /**
-   * alters page save event
-   *
-   * @param {*} param0 
-   * @param {*} field 
-   */
-  async save({ req, dashup }, page) {
-    // return once done
-    return;
-  }
-
-  /**
-   * alters resulting sanitised page
-   *
-   * @param {*} param0 
-   * @param {*} field 
-   * @param {*} value 
-   */
-  async sanitise({ req, dashup }, page) {
-    // return value
-    return page;
   }
 }

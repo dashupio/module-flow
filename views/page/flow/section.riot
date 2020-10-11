@@ -2,7 +2,7 @@
   <div class={ `flow-elements ${isEmpty() ? ' flow-elements-empty' : ''}` } onclick={ (e) => isEmpty() ? props.onSidebar(e) : null }>
     <div class="flow-elements-row">
       <div each={ (action, a) in getChildren() } id={ action.uuid } class="flow-element" data-order={ action.order }>
-        <div if={ getView(action) } is={ getView(action) } view="config" set={ (k, v) => props.onSet(action, k, v) } action={ action } { ...getProps() } />
+        <dashup-view if={ getView(action) } type="action" view="config" struct={ action.type } set={ (k, v) => props.onSet(action, k, v) } action={ action } { ...getProps() } />
         <page-flow-section data-id={ action.uuid } { ...getProps() } />
       </div>
     </div>

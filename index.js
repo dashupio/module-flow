@@ -23,39 +23,18 @@ class FlowModule extends Module {
   }
   
   /**
-   * Register all page interfaces here
-   * 
-   * ```
-   * // register connect class
-   * register(Page);
-   * ```
-   * 
-   * Class `Page` should extend `require('@dashup/module').Page`
-   * 
-   * @param {Function} register 
+   * register logic
+   *
+   * @param {*} fn 
    */
-  pages(register) {
+  register(fn) {
     // register sms action
-    register(FlowPage);
-  }
-  
-  /**
-   * Register all action interfaces here
-   * 
-   * ```
-   * // register connect class
-   * register(Action);
-   * ```
-   * 
-   * Class `Action` should extend `require('@dashup/module').Action`
-   * 
-   * @param {Function} register 
-   */
-  actions(register) {
-    // register sms action
-    register(HookAction);
-    register(EventAction);
-    register(FilterAction);
+    fn('page', FlowPage);
+    
+    // register actions
+    fn('action', HookAction);
+    fn('action', EventAction);
+    fn('action', FilterAction);
   }
 }
 
