@@ -9,6 +9,17 @@ import { Struct } from '@dashup/module';
 export default class FilterAction extends Struct {
 
   /**
+   * construct
+   */
+  constructor(...args) {
+    // return
+    super(...args);
+
+    // run listen
+    this.runAction = this.runAction.bind(this);
+  }
+
+  /**
    * returns action type
    */
   get type() {
@@ -43,6 +54,16 @@ export default class FilterAction extends Struct {
   }
 
   /**
+   * returns object of views
+   */
+  get actions() {
+    // return object of views
+    return {
+      run : this.runAction,
+    };
+  }
+
+  /**
    * returns category list to show action in
    */
   get categories() {
@@ -59,26 +80,26 @@ export default class FilterAction extends Struct {
   }
 
   /**
-   * triggered
+   * action method
    *
-   * @param opts 
-   * @param element 
+   * @param param0 
+   * @param action 
    * @param data 
    */
-  async run(opts, element, data) {
+  async runAction(opts, action, data) {
     // get queries
-    const queries = element.config.query ? JSON.parse(element.config.query) : [];
+    const queries = action.query ? JSON.parse(action.query) : [];
 
     // find where doesn't match
     if (queries.find((q) => {
       // return length
-      return !query.query([data.sanitised], q).length;
+      return !query.query([data], q).length;
     })) {
       // return false
       return false;
     }
     
     // return true
-    return true;
+    return { data };
   }
 }

@@ -8,6 +8,17 @@ import { Struct } from '@dashup/module';
 export default class HookAction extends Struct {
 
   /**
+   * construct
+   */
+  constructor(...args) {
+    // return
+    super(...args);
+
+    // run listen
+    this.runAction = this.runAction.bind(this);
+  }
+
+  /**
    * returns action type
    */
   get type() {
@@ -42,6 +53,16 @@ export default class HookAction extends Struct {
   }
 
   /**
+   * returns object of views
+   */
+  get actions() {
+    // return object of views
+    return {
+      run : this.runAction,
+    };
+  }
+
+  /**
    * returns category list to show action in
    */
   get categories() {
@@ -58,20 +79,17 @@ export default class HookAction extends Struct {
   }
 
   /**
-   * triggered
+   * action method
    *
-   * @param opts 
-   * @param element 
+   * @param param0 
+   * @param action 
    * @param data 
    */
-  async triggered(opts, element, data) {
-    // trigger hook
-    if ((element.config || {}).hook) {
-      // trigger hook
-      await this.dashup.hook(`${element.config.hook}`, data);
-    }
+  async runAction(opts, action, data) {
+    // trigger event
+    await this.dashup.connection.hook(opts, action.hook, data);
 
     // continue
-    return true;
+    return { data };
   }
 }

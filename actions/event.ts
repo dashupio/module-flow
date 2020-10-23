@@ -8,6 +8,17 @@ import { Struct } from '@dashup/module';
 export default class EventAction extends Struct {
 
   /**
+   * construct
+   */
+  constructor(...args) {
+    // return
+    super(...args);
+
+    // run listen
+    this.runAction = this.runAction.bind(this);
+  }
+
+  /**
    * returns action type
    */
   get type() {
@@ -42,6 +53,16 @@ export default class EventAction extends Struct {
   }
 
   /**
+   * returns object of views
+   */
+  get actions() {
+    // return object of views
+    return {
+      run : this.runAction,
+    };
+  }
+
+  /**
    * returns category list to show action in
    */
   get categories() {
@@ -58,20 +79,17 @@ export default class EventAction extends Struct {
   }
 
   /**
-   * triggered
+   * action method
    *
-   * @param opts 
-   * @param element 
+   * @param param0 
+   * @param action 
    * @param data 
    */
-  async run(opts, element, data) {
+  runAction(opts, action, data) {
     // trigger event
-    if ((element.config || {}).event) {
-      // trigger event
-      this.dashup.emit(element.config.event, data);
-    }
+    this.dashup.connection.event(opts, action.event, data);
 
     // continue
-    return true;
+    return { data };
   }
 }
