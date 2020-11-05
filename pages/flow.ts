@@ -34,7 +34,7 @@ export default class FlowPage extends Struct {
    */
   get icon() {
     // return page type label
-    return 'fa fa-database';
+    return 'fa fa-code-merge';
   }
 
   /**
@@ -80,7 +80,7 @@ export default class FlowPage extends Struct {
    */
   get categories() {
     // return array of categories
-    return ['frontend'];
+    return ['Workflow'];
   }
 
   /**
@@ -88,7 +88,7 @@ export default class FlowPage extends Struct {
    */
   get description() {
     // return description string
-    return 'Page Descripton';
+    return 'Automated workflow page';
   }
 
   /**
