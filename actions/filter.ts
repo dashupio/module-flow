@@ -1,7 +1,54 @@
 
 // import base
 import query from 'query';
+import pretty from 'pretty-ms';
+import moment from 'moment-timezone';
+import helpers from 'handlebars-helpers';
+import handlebars from 'handlebars';
 import { Struct } from '@dashup/module';
+
+// register helper
+handlebars.registerHelper(helpers());
+handlebars.registerHelper('ms', (amount, extra, options) => {
+  // check now
+  amount = parseInt(amount);
+
+  // return formatted
+  return pretty(amount);
+});
+handlebars.registerHelper('date', (date, fmt, options) => {
+  // check now
+  if (date === 'now') date = new Date();
+
+  // check options
+  if (typeof fmt !== 'string') {
+    fmt = 'MMMM DD YYYY, LT';
+    options = fmt;
+  }
+
+  // return formatted
+  return moment(date).format(fmt);
+});
+handlebars.registerHelper('timezone', (tz, options) => {
+  // check now
+  let date = new Date();
+
+  // return formatted
+  return moment(date).tz(tz).format('ha z');
+});
+handlebars.registerHelper('since', (date, extra, options) => {
+  // check now
+  if (date === 'now') date = new Date();
+
+  // check options
+  if (typeof extra !== 'boolean') {
+    extra = true;
+    options = extra;
+  }
+
+  // return formatted
+  return moment(date).fromNow(extra);
+});
 
 /**
  * create dashup action
@@ -88,7 +135,35 @@ export default class FilterAction extends Struct {
    */
   async runAction(opts, action, data) {
     // get queries
-    const queries = action.query ? JSON.parse(action.query) : [];
+    let queries = action.query ? JSON.parse(action.query) : [];
+
+    // loop
+    queries = queries.map((filter) => {
+      // set type
+      const type = Object.keys(filter)[0];
+
+      // set type
+      filter[type] = filter[type].map((item) => {
+        // get keys
+        const name = Object.keys(item)[0];
+        const fn = Object.keys(item[name])[0];
+
+        // create thing
+        const template = handlebars.compile(item[name][fn]);
+
+        // return filtered
+        return {
+          [name] : {
+            [fn] : template({
+              ...data,
+            }),
+          },
+        };
+      }).filter((t) => t);
+
+      // return filter
+      return filter;
+    });
 
     // find where doesn't match
     if (queries.find((q) => {

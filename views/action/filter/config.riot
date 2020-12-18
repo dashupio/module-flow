@@ -10,7 +10,7 @@
       <p>
         Only continue when the following matches
       </p>
-      <dashup-query fields={ props.fields } on-change={ (v) => onChange(v) } data-value={ props.action.query ? JSON.parse(props.action.query) : [] } />
+      <dashup-query fields={ getFields() } on-change={ (v) => onChange(v) } data-value={ props.action.query ? JSON.parse(props.action.query) : [] } />
     </div>
   </div>
 
@@ -26,6 +26,41 @@
       onChange(v) {
         // set element
         this.props.set('query', JSON.stringify(v));
+      }
+
+      /**
+       * get fields
+       */
+      getFields() {
+        // model
+        const model = this.props.page.get('data.trigger.model');
+
+        // check model
+        if (!model) return null;
+
+        // reduce
+        const fields = Array.from(this.props.dashup.get('pages').values()).filter((page) => {
+          // return page
+          return page.get('type') === 'form' && page.get('data.model') === model;
+        }).reduce((accum, page) => {
+          // check page
+          if (!page || !page.get('data.fields')) return accum;
+
+          // loop fields
+          accum.push(...page.get('data.fields'));
+
+          // return accum
+          return accum;
+        }, []);
+
+        // fields
+        return fields.map((field) => {
+          return {
+            ...field,
+
+            name : `model.${field.name}`,
+          }
+        });
       }
     }
   </script>
