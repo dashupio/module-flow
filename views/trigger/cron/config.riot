@@ -46,10 +46,10 @@
       /**
        * on change
        */
-      onChange(val) {
+      async onChange(val) {
         // set value
-        this.props.set('date', val);
-        this.props.set('next', null);
+        await this.props.set('date', val);
+        await this.props.set('next', null);
       }
     }
   </script>

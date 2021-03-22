@@ -1,4 +1,5 @@
 // import base
+import { v4 as uuid } from 'uuid';
 import { Struct, Query } from '@dashup/module';
 
 /**
@@ -113,6 +114,7 @@ export default class WebhookTrigger extends Struct {
     this.dashup.connection.action({
       page   : page.get('_id'),
       type   : 'page',
+      nonce  : uuid(),
       struct : 'flow',
     }, 'trigger', {
       type : 'webhook',
