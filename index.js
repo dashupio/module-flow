@@ -5,10 +5,11 @@ const { Module } = require('@dashup/module');
 const FlowPage = require('./pages/flow');
 
 // import base
-const HookAction   = require('./actions/hook');
-const CRONTrigger  = require('./triggers/cron');
-const EventAction  = require('./actions/event');
-const FilterAction = require('./actions/filter');
+const HookAction     = require('./actions/hook');
+const CRONTrigger    = require('./triggers/cron');
+const EventAction    = require('./actions/event');
+const FilterAction   = require('./actions/filter');
+const WebhookTrigger = require('./triggers/webhook');
 
 /**
  * export module
@@ -39,6 +40,7 @@ class FlowModule extends Module {
 
     // register triggers
     fn('trigger', CRONTrigger);
+    fn('trigger', WebhookTrigger);
   }
 }
 

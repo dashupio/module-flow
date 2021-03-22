@@ -198,9 +198,11 @@ export default class CRONTrigger extends Struct {
         type   : 'page',
         struct : 'flow',
       }, 'trigger', {
-        type : 'model',
-        prev,
-        next,
+        type : 'cron',
+        data : {
+          next,
+          prev,
+        },
       });
     });
   }
