@@ -6,6 +6,7 @@ const FlowPage = require('./pages/flow');
 
 // import base
 const HookAction   = require('./actions/hook');
+const CRONTrigger  = require('./triggers/cron');
 const EventAction  = require('./actions/event');
 const FilterAction = require('./actions/filter');
 
@@ -28,13 +29,16 @@ class FlowModule extends Module {
    * @param {*} fn 
    */
   register(fn) {
-    // register sms action
+    // register pages
     fn('page', FlowPage);
     
     // register actions
     fn('action', HookAction);
     fn('action', EventAction);
     fn('action', FilterAction);
+
+    // register triggers
+    fn('trigger', CRONTrigger);
   }
 }
 
