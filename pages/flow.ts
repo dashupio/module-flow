@@ -50,7 +50,9 @@ export default class FlowPage extends Struct {
    */
   get data() {
     // return page data
-    return {};
+    return {
+      tabs : ['Connects'],
+    };
   }
 
   /**
@@ -59,9 +61,9 @@ export default class FlowPage extends Struct {
   get views() {
     // return object of views
     return {
-      view   : 'page/flow/view',
-      menu   : 'page/flow/menu',
-      config : 'page/flow/config',
+      view     : 'page/flow/view',
+      menu     : 'page/flow/menu',
+      connects : 'page/flow/connects',
     };
   }
 
