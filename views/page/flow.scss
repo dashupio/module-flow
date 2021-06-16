@@ -1,0 +1,23 @@
+
+@import '../../node_modules/react-flow-renderer/dist/style';
+
+$spacer: 1rem;
+
+.react-flow {
+  .react-flow__handle {
+    width      : $spacer;
+    height     : $spacer;
+    z-index    : 20;
+    background : var(--bs-primary);
+  }
+  .react-flow__handle-bottom {
+    bottom : -($spacer / 2);
+  }
+  .react-flow__handle-top {
+    top : -($spacer / 2);
+  }
+  .react-flow__edge-path {
+    stroke       : var(--bs-dark-transparent);
+    stroke-width : ($spacer / 10);
+  }
+}

@@ -55,7 +55,7 @@ export default class CRONTrigger extends Struct {
   get views() {
     // return object of views
     return {
-      config : 'trigger/cron/config',
+      config : 'trigger/cron',
     };
   }
 

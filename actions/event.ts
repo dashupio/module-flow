@@ -48,7 +48,7 @@ export default class EventAction extends Struct {
   get views() {
     // return object of views
     return {
-      config : 'action/event/config',
+      config : 'action/event',
     };
   }
 

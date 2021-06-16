@@ -49,7 +49,7 @@ export default class WebhookTrigger extends Struct {
   get views() {
     // return object of views
     return {
-      config : 'trigger/webhook/config',
+      config : 'trigger/webhook',
     };
   }
 

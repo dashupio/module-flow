@@ -48,7 +48,7 @@ export default class HookAction extends Struct {
   get views() {
     // return object of views
     return {
-      config : 'action/hook/config',
+      config : 'action/hook',
     };
   }
 

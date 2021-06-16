@@ -61,9 +61,7 @@ export default class FlowPage extends Struct {
   get views() {
     // return object of views
     return {
-      view     : 'page/flow/view',
-      menu     : 'page/flow/menu',
-      connects : 'page/flow/connects',
+      view : 'page/flow',
     };
   }
 
@@ -136,11 +134,14 @@ export default class FlowPage extends Struct {
    * @param data 
    */
   async triggerAction(opts, data) {
+    // check trigger
+    const id = `${opts.page}.${opts.nonce}`;
+
     // check nonce
-    if (this.checks.includes(opts.nonce)) return null;
+    if (this.checks.includes(id)) return null;
 
     // push
-    this.checks.push(opts.nonce);
+    this.checks.push(id);
 
     // length
     if (this.checks.length > 100) this.checks.shift();

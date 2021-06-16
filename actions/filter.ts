@@ -49,6 +49,10 @@ handlebars.registerHelper('since', (date, extra, options) => {
   // return formatted
   return moment(date).fromNow(extra);
 });
+handlebars.registerHelper('var', (varName, varValue, options) => {
+  // set var
+  options.data.root[varName] = varValue;
+});
 
 /**
  * create dashup action
@@ -96,7 +100,7 @@ export default class FilterAction extends Struct {
   get views() {
     // return object of views
     return {
-      config : 'action/filter/config',
+      config : 'action/filter',
     };
   }
 
@@ -139,27 +143,40 @@ export default class FilterAction extends Struct {
 
     // loop
     queries = queries.map((filter) => {
-      // set type
-      const type = Object.keys(filter)[0];
+      // try/catch
+      try {
+        // set type
+        const type = Object.keys(filter)[0];
 
-      // set type
-      filter[type] = filter[type].map((item) => {
-        // get keys
-        const name = Object.keys(item)[0];
-        const fn = Object.keys(item[name])[0];
+        // set type
+        filter[type] = filter[type].map((item) => {
+          // get keys
+          const name = Object.keys(item)[0];
+          const fn = Object.keys(item[name])[0];
 
-        // create thing
-        const template = handlebars.compile(item[name][fn]);
+          // return item
+          if (typeof item[name][fn] !== 'string') return item;
 
-        // return filtered
-        return {
-          [name] : {
-            [fn] : template({
-              ...data,
-            }),
-          },
-        };
-      }).filter((t) => t);
+          // create thing
+          const template = handlebars.compile(item[name][fn]);
+
+          // value
+          let value = template({
+            ...data,
+          });
+
+          // fix falsy
+          if (value.toLowerCase() === 'true') value = true;
+          if (value.toLowerCase() === 'false') value = false;
+
+          // return filtered
+          return {
+            [name] : {
+              [fn] : value,
+            },
+          };
+        }).filter((t) => t);
+      } catch (e) {}
 
       // return filter
       return filter;
