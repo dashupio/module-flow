@@ -1,8 +1,7 @@
 // import dependencies
-import { View } from '@dashup/ui';
 import { Handle } from 'react-flow-renderer';
 import React, { memo } from 'react';
-import Select from 'react-select';
+import { View, Select } from '@dashup/ui';
 
 // export default
 export default memo(({ data : props }) => {
