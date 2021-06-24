@@ -258,7 +258,7 @@ const PageFlow = (props = {}) => {
 
       <Page.Config show={ config } onHide={ (e) => setConfig(false) } />
 
-      <Page.Menu onConfig={ () => setConfig(true) } onShare>
+      <Page.Menu onConfig={ () => setConfig(true) } presence={ props.presence }>
 
         { updating && props.dashup.can(props.page, 'manage') && (
           <button className="me-2 btn btn-primary" onClick={ () => setMenu(true) }>
