@@ -166,8 +166,8 @@ export default class FilterAction extends Struct {
           });
 
           // fix falsy
-          if (value.toLowerCase() === 'true') value = true;
-          if (value.toLowerCase() === 'false') value = false;
+          if (`${value}`.toLowerCase() === 'true') value = true;
+          if (`${value}`.toLowerCase() === 'false') value = false;
 
           // return filtered
           return {
