@@ -127,7 +127,7 @@ export default class FilterAction extends Struct {
    */
   get description() {
     // return description string
-    return 'Trigger Filter';
+    return 'Filter Action';
   }
 
   /**
@@ -139,7 +139,9 @@ export default class FilterAction extends Struct {
    */
   async runAction(opts, action, data) {
     // get queries
-    let queries = action.query ? JSON.parse(action.query) : [];
+    let queries = action.filter || action.query ? JSON.parse(action.filter || action.query) : [];
+
+    console.log('QUERIES', queries, data);
 
     // loop
     queries = queries.map((filter) => {
@@ -185,7 +187,7 @@ export default class FilterAction extends Struct {
     // find where doesn't match
     if (queries.find((q) => {
       // return length
-      return !query.query([data], q).length;
+      return !query.query([data?.model || data], q).length;
     })) {
       // return false
       return false;

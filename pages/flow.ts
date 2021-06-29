@@ -101,12 +101,12 @@ export default class FlowPage extends Struct {
    */
   run(children, tld, opts, data) {
     // find children by tld
-    const actualChildren = [...children].filter((child) => (child.parent || 'root') === tld);
+    const actualChildren = [...children].filter((child) => (child.parent || 'trigger') === tld);
 
     // loop
     actualChildren.forEach(async (actualChild) => {
       // emit new message
-      let { data:newData } = await this.dashup.connection.action({
+      let { data : newData } = await this.dashup.connection.action({
         ...opts,
   
         type   : 'action',
@@ -150,9 +150,9 @@ export default class FlowPage extends Struct {
     const page = await new Query(opts, 'page').findById(opts.page);
 
     // actions
-    const children = page.get('data.children') || [];
+    const children = page.get('data.nodes') || [];
 
     // get root children
-    this.run(children, 'root', opts, data);
+    this.run(children, 'trigger', opts, data);
   }
 }
