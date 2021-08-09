@@ -21,6 +21,7 @@ let iNode = null;
 const PageFlow = (props = {}) => {
   // use state
   const [menu, setMenu] = useState(false);
+  const [fitted, setFitted] = useState(false);
   const [remove, setRemove] = useState(null);
   const [config, setConfig] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -111,7 +112,10 @@ const PageFlow = (props = {}) => {
 
     // set trigger
     setActions([...actions, action]);
-    return props.setData('nodes', [...actions, action], true);
+    props.setData('nodes', [...actions, action], true);
+
+    // fit view
+    if (iNode) setTimeout(() => iNode.fitView(), 500);
   };
 
   // set trigger
@@ -125,8 +129,11 @@ const PageFlow = (props = {}) => {
     // set inode
     iNode = i;
 
+    // set fitted
+    setFitted(true);
+
     // fit view
-    if (iNode) iNode.fitView();
+    if (iNode && !fitted) iNode.fitView();
   };
 
   // connect

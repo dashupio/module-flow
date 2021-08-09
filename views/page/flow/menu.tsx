@@ -1,8 +1,8 @@
 
 // import dependencies
+import SimpleBar from 'simplebar-react';
 import { Offcanvas } from 'react-bootstrap';
 import React, { useState } from 'react';
-import ReactPerfectScrollbar from 'react-perfect-scrollbar';
 
 // create dashup grid body
 const PageFlowMenu = (props = {}) => {
@@ -21,7 +21,7 @@ const PageFlowMenu = (props = {}) => {
           Select one of these actions and click "Add Action" to add it to your flow.
         </div>
         <div className="flex-1 fit-content">
-          <ReactPerfectScrollbar className="p-3">
+          <SimpleBar className="p-3">
             { (props.available || []).map((action, i) => {
               // return actions
               return (
@@ -42,7 +42,7 @@ const PageFlowMenu = (props = {}) => {
                 </a>
               );
             }) }
-          </ReactPerfectScrollbar>
+          </SimpleBar>
         </div>
         { !!selected && (
           <div className="p-3 flex-0">

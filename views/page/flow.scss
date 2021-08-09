@@ -17,7 +17,7 @@ $spacer: 1rem;
     top : -($spacer / 2);
   }
   .react-flow__edge-path {
-    stroke       : var(--bs-dark-transparent);
-    stroke-width : ($spacer / 10);
+    stroke       : var(--bs-dark);
+    stroke-width : ($spacer / 5);
   }
 }
