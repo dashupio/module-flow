@@ -31,7 +31,7 @@ export default class HookAction extends Struct {
    */
   get icon() {
     // return trigger type label
-    return 'fa fa-calendar-exclamation';
+    return 'fad fa-calendar-exclamation';
   }
 
   /**
@@ -75,7 +75,7 @@ export default class HookAction extends Struct {
    */
   get description() {
     // return description string
-    return 'Trigger Hook';
+    return 'Named Hook Trigger';
   }
 
   /**

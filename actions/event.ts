@@ -31,7 +31,7 @@ export default class EventAction extends Struct {
    */
   get icon() {
     // return trigger type label
-    return 'fa fa-play';
+    return 'fad fa-plus-square';
   }
 
   /**
@@ -75,7 +75,7 @@ export default class EventAction extends Struct {
    */
   get description() {
     // return description string
-    return 'Trigger Event';
+    return 'Named Event Trigger';
   }
 
   /**

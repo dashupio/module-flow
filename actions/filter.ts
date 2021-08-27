@@ -83,7 +83,7 @@ export default class FilterAction extends Struct {
    */
   get icon() {
     // return trigger type label
-    return 'fa fa-play';
+    return 'fad fa-filter';
   }
 
   /**
@@ -127,7 +127,7 @@ export default class FilterAction extends Struct {
    */
   get description() {
     // return description string
-    return 'Filter Action';
+    return 'Filter by Data';
   }
 
   /**
