@@ -2,9 +2,8 @@
 // import dependencies
 import dotProp from 'dot-prop';
 import shortid from 'shortid';
-import { Page } from '@dashup/ui';
-import { Modal, Button } from 'react-bootstrap';
 import ReactFlow, { MiniMap } from 'react-flow-renderer';
+import { Page, Modal, Button } from '@dashup/ui';
 import React, { useState, useEffect } from 'react';
 
 // import node types
