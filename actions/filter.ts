@@ -141,8 +141,6 @@ export default class FilterAction extends Struct {
     // get queries
     let queries = action.filter || action.query ? JSON.parse(action.filter || action.query) : [];
 
-    console.log('QUERIES', queries, data);
-
     // loop
     queries = queries.map((filter) => {
       // try/catch

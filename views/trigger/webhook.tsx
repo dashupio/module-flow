@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { TextField, Box, CircularProgress } from '@dashup/ui';
 
 // create model trigger
 const TriggerWebhook = (props = {}) => {
@@ -21,18 +22,21 @@ const TriggerWebhook = (props = {}) => {
     <>
       { key ? (
         <>
-          <label className="form-label">
-            Webhook URL
-          </label>
-          <input className="form-control" value={ `https://dashup.io/api/hook/${key}` } readOnly />
-          <small>
-            Both GET and POST work
-          </small>
+          <TextField
+            label="Webhook URL"
+            value={ `https://dashup.com/api/hook/${key}` }
+            helperText="Both GET and POST"
+            fullWidth
+            
+            InputProps={ {
+              readOnly : true,
+            } }
+          />
         </>
       ) : (
-        <div className="text-center">
-          <i className="h1 fa fa-spinner fa-spin" />
-        </div>
+        <Box width="100%" textAlign="center" py={ 2 }>
+          <CircularProgress />
+        </Box>
       ) }
     </>
   );

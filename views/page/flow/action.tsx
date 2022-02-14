@@ -1,10 +1,13 @@
 // import dependencies
-import { View } from '@dashup/ui';
 import { Handle } from 'react-flow-renderer';
 import React, { memo } from 'react';
+import { View, useTheme, Box, Card, CardHeader, Avatar, Icon, CardContent, IconButton } from '@dashup/ui';
 
 // export default
 export default memo(({ data : props }) => {
+  // theme
+  const theme = useTheme();
+
   // get props
   const getProps = () => {
     // new props
@@ -24,27 +27,32 @@ export default memo(({ data : props }) => {
 
   // return jsx
   return (
-    <>
+    <Box>
       <Handle
         id="i"
         type="input"
         position="top"
       />
-      <div className="card card-flowing card-trigger">
-        <div className="card-header d-flex flex-row">
-          <div className="card-icon">
-            <i className="fa fa-bolt" />
-          </div>
-          Action
-          { props.updating && (
-            <div className="ms-auto">
-              <button className="btn btn-danger" onClick={ () => props.setRemove(props.action) }>
-                <i className="fa fa-trash" />
-              </button>
-            </div>
+      
+      <Card sx={ {
+        minWidth : 360,
+        maxWidth : 360,
+      } }>
+        <CardHeader
+          avatar={ (
+            <Avatar bgColor={ theme.palette.primary.main }>
+              <Icon type="fas" icon={ struct?.icon || 'bolt' } />
+            </Avatar>
           ) }
-        </div>
-        <div className="card-body">
+          action={ !!props.updating && (
+            <IconButton onClick={ () => props.setRemove(props.action) } color="error">
+              <Icon type="fas" icon="trash" />
+            </IconButton>
+          ) }
+          title="Trigger"
+          subheader="Initial Flow Trigger"
+        />
+        <CardContent>
           { !!props.page.get('data.trigger.type') && (
             <View
               type="action"
@@ -53,13 +61,11 @@ export default memo(({ data : props }) => {
               action={ props.action }
               
               { ...getProps() }
-            >
-              <i className="fa fa-spinner fa-spin ms-2" />
-            </View>
+            />
           ) }
-
-        </div>
-      </div>
+        </CardContent>
+        <Box />
+      </Card>
       { struct?.data?.handles ? struct.data.handles.map((handle) => {
         // return jsx
         return (
@@ -75,6 +81,6 @@ export default memo(({ data : props }) => {
           position="bottom"
         />
       ) }
-    </>
+    </Box>
   );
 });

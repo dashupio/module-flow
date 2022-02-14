@@ -5,10 +5,9 @@ $spacer: 1rem;
 
 .react-flow {
   .react-flow__handle {
-    width      : $spacer;
-    height     : $spacer;
-    z-index    : 20;
-    background : var(--bs-primary);
+    width   : $spacer;
+    height  : $spacer;
+    z-index : 20;
   }
   .react-flow__handle-bottom {
     bottom : -($spacer / 2);
@@ -17,7 +16,6 @@ $spacer: 1rem;
     top : -($spacer / 2);
   }
   .react-flow__edge-path {
-    stroke       : var(--bs-dark);
     stroke-width : ($spacer / 5);
   }
 }

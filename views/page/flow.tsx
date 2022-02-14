@@ -3,7 +3,7 @@
 import dotProp from 'dot-prop';
 import shortid from 'shortid';
 import ReactFlow, { MiniMap } from 'react-flow-renderer';
-import { Page, Modal, Button } from '@dashup/ui';
+import { Page, Dialog, DialogContent, DialogContentText, DialogActions, DialogTitle, Button, Box } from '@dashup/ui';
 import React, { useState, useEffect } from 'react';
 
 // import node types
@@ -206,6 +206,7 @@ const PageFlow = (props = {}) => {
             ...props,
             action,
             onLoad,
+            onConfig : () => setConfig(true),
             updating,
             setRemove,
             setAction,
@@ -221,10 +222,12 @@ const PageFlow = (props = {}) => {
       ...actions.map((action) => {
         // add lines
         return action.parent && (actions.find((p) => p.uuid === action.parent) || action.parent === 'trigger') && {
-          id           : `${action.uuid}-${parent}`,
+          id           : `${action.uuid}-${action.parent}`,
           source       : action.parent,
           target       : action.uuid,
+          animated     : true,
           sourceHandle : action.source || 'a',
+          targetHandle : 'i',
         };
       }).filter((a) => a),
     ];
@@ -236,65 +239,61 @@ const PageFlow = (props = {}) => {
 
   // remove jsx
   const removeJsx = remove && (
-    <Modal show onHide={ (e) => setRemove(null) }>
-      <Modal.Header closeButton>
-        <Modal.Title>
-          Removing <b>{ remove.type }</b>
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <p className="lead">
+    <Dialog open={ !!remove } onClose={ () => setRemove(null) }>
+      <DialogTitle>
+        Removing <b>{ remove.type }</b>
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText>
           Are you sure you want to remove <b>{ remove.type }</b>?
-        </p>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button variant="primary" onClick={ (e) => !setRemove(null) && e.preventDefault() }>
-          Close
-        </Button>
-        <Button variant="danger" className="ms-2" onClick={ (e) => onRemove(remove) }>
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={ () => setRemove(null) }>Cancel</Button>
+        <Button variant="contained" color="error" onClick={ (e) => onRemove(remove) }>
           Confirm
         </Button>
-      </Modal.Footer>
-    </Modal>
+      </DialogActions>
+    </Dialog>
   );
 
   // return jsx
   return (
-    <Page { ...props } loading={ loading } bodyClass="flex-column">
+    <Page { ...props } loading={ loading } onConfig={ () => setConfig(true) }>
 
       <Page.Config show={ config } onHide={ (e) => setConfig(false) } />
 
-      <Page.Menu onConfig={ () => setConfig(true) } presence={ props.presence }>
+      <Page.Filter presence={ props.presence }>
 
         { updating && props.dashup.can(props.page, 'manage') && (
-          <button className="me-2 btn btn-primary" onClick={ () => setMenu(true) }>
-            <i className="fa fa-plus me-2" />
+          <Button variant="contained" color="primary" onClick={ () => setMenu(true) }>
             Add Action
-          </button>
+          </Button>
         ) }
         { props.dashup.can(props.page, 'manage') && (
-          <button className={ `me-2 btn btn-${!updating ? 'link text-dark' : 'primary'}` } onClick={ (e) => setUpdating(!updating) }>
-            <i className={ `fat fa-${!updating ? 'pencil' : 'check'} me-2` } />
-            { !updating ? 'Update Flow' : 'Finish Updating' }
-          </button>
+          <Button variant="contained" color={ updating ? 'success' : 'primary' } onClick={ () => setUpdating(!updating) }>
+            { updating ? 'Finish' : 'Update Flow' }
+          </Button>
         ) }
-      </Page.Menu>
+      </Page.Filter>
+      
       <Page.Body>
-        <div className="d-flex flex-1 fit-content">
-          <ReactFlow
-            nodesConnectable={ updating && props.dashup.can(props.page, 'manage') }
-            nodesDraggable={ updating && props.dashup.can(props.page, 'manage') }
-            onLoad={ onLoad }
-            elements={ getElements() }
-            nodeTypes={ nodeTypes }
-            onConnectEnd={ onConnect }
-            onConnectStart={ (e) => fNode = e.target }
-            onNodeDragStop={ (e, item) => onDragged(item) }
+        <Box flex={ 1 } position="relative">
+          <Box position="absolute" top={ 0 } left={ 0 } right={ 0 } bottom={ 0 }>
+            <ReactFlow
+              nodesConnectable={ updating && props.dashup.can(props.page, 'manage') }
+              nodesDraggable={ updating && props.dashup.can(props.page, 'manage') }
+              onLoad={ onLoad }
+              elements={ getElements() }
+              nodeTypes={ nodeTypes }
+              onConnectEnd={ onConnect }
+              onConnectStart={ (e) => fNode = e.target }
+              onNodeDragStop={ (e, item) => onDragged(item) }
             >
-              
-            <MiniMap />
-          </ReactFlow>
-        </div>
+              <MiniMap />
+            </ReactFlow>
+          </Box>
+        </Box>
       </Page.Body>
       <Menu available={ props.available.actions } show={ menu } onHide={ (e) => setMenu(false) } onAction={ onCreate } />
       { removeJsx }

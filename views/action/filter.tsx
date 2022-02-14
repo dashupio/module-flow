@@ -12,19 +12,17 @@ const ActionFilter = (props = {}) => {
   // return jsx
   return (
     <>
-      <label className="form-label">
-        Only continue when the following matches
-      </label>
       <Query
         isString
 
         page={ props.page }
+        label="Continue when the following matches"
         query={ props.action.filter }
         dashup={ props.dashup }
         fields={ (forms.length ? props.getFields(forms) : []) }
         onChange={ (val) => props.setAction(props.action, 'filter', val) }
         getFieldStruct={ props.getFieldStruct }
-        />
+      />
     </>
   );
 };

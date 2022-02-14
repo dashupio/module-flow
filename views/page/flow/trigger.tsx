@@ -1,10 +1,12 @@
 // import dependencies
 import { Handle } from 'react-flow-renderer';
 import React, { memo } from 'react';
-import { View, Select } from '@dashup/ui';
+import { Box, View, Select, Card, CardHeader, Avatar, Icon, useTheme, CardContent, TextField, MenuItem } from '@dashup/ui';
 
 // export default
 export default memo(({ data : props }) => {
+  // use theme
+  const theme = useTheme();
 
   // get props
   const getProps = () => {
@@ -46,18 +48,37 @@ export default memo(({ data : props }) => {
 
   // return jsx
   return (
-    <>
-      <div className="card card-flowing card-trigger">
-        <div className="card-header">
-          <div className="card-icon">
-            <i className="fa fa-bolt" />
-          </div>
-          Trigger
-        </div>
-        <div className="card-body">
-          <div className="mb-3">
-            <Select options={ getTriggers() } defaultValue={ getTriggers().filter((f) => f.selected) } onChange={ (val) => props.setTrigger('type', val?.value) } />
-          </div>
+    <Box>
+      <Card sx={ {
+        minWidth : 360,
+        maxWidth : 360,
+      } }>
+        <CardHeader
+          avatar={ (
+            <Avatar bgColor={ theme.palette.primary.main }>
+              <Icon type="fas" icon="bolt" />
+            </Avatar>
+          ) }
+          title="Trigger"
+          subheader="Initial Flow Trigger"
+        />
+        <CardContent>
+          <TextField
+            label="Trigger"
+            value={ props.page.get('data.trigger.type') || '' }
+            select
+            onChange={ (e) => props.setTrigger('type', e.target.value) }
+            fullWidth
+          >
+            { getTriggers().map((trigger) => {
+              // return jsx
+              return (
+                <MenuItem key={ trigger.value } value={ trigger.value }>
+                  { trigger.label }
+                </MenuItem>
+              )
+            }) }
+          </TextField>
           { !!props.page.get('data.trigger.type') && (
             <View
               type="trigger"
@@ -70,14 +91,14 @@ export default memo(({ data : props }) => {
               <i className="fa fa-spinner fa-spin ms-2" />
             </View>
           ) }
-
-        </div>
-      </div>
+        </CardContent>
+        <Box />
+      </Card>
       <Handle
         id="a"
         type="source"
         position="bottom"
       />
-    </>
+    </Box>
   );
 });

@@ -44,7 +44,7 @@ const TriggerCron = (props = {}) => {
       field={ getField() }
       value={ getValue() }
 
-      onChange={ onChange }
+      onChange={ (f, v) => onChange(v) }
     />
   );
 };

@@ -1,6 +1,7 @@
 
 // import react
 import React from 'react';
+import { TextField } from '@dashup/ui';
 
 // create event action
 const ActionEvent = (props = {}) => {
@@ -8,10 +9,12 @@ const ActionEvent = (props = {}) => {
   // return jsx
   return (
     <>
-      <label className="form-label">
-        Trigger the event
-      </label>
-      <input className="form-control" value={ props.action.event || '' } type="text" onChange={ (e) => props.setAction(props.action, 'event', e.target.value) } />
+      <TextField
+        label="Trigger Event"
+        value={ props.action.event || '' }
+        onChange={ (e) => props.setAction(props.action, 'event', e.target.value) }
+        fullWidth
+      />
     </>
   );
 };
